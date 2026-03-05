@@ -1,30 +1,31 @@
-# 📘 Runbook: Запуск AI-Агентов (NLP & LLM Orchestration)
+# 📘 Runbook: AI Agents Execution (NLP & LLM Orchestration)
 
-Данный модуль демонстрирует работу гибридного пайплайна: детерминированный NLP-маршрутизатор (Intent Router) + вызов LLM (Ollama/Gemini) в качестве Fallback-механизма.
+*Read this in [Russian](02_run_agents_RU.md)*
 
-## ⚙️ Предварительная настройка
-Убедитесь, что в файле `configs/settings.ini` установлен нужный режим:
-*   `DEMO_MODE = True` — безопасный запуск без траты токенов API и без требования локально установленной Ollama (возвращает Mock-ответы).
-*   `DEMO_MODE = False` — production-режим (требует валидный `GEMINI_API_KEY` и запущенный сервис Ollama).
+This module demonstrates a hybrid pipeline: a deterministic NLP Intent Router combined with an LLM (Ollama/Gemini) fallback mechanism.
 
-## 🚀 Использование CLI
+## ⚙️ Prerequisites
+Ensure the correct mode is set in `configs/settings.ini`:
+*   `DEMO_MODE = True` — Safe execution without consuming API tokens or requiring a local Ollama instance (returns Mock responses).
+*   `DEMO_MODE = False` — Production mode (requires a valid `GEMINI_API_KEY` and a running Ollama service).
 
-Единая точка входа для всех модулей — `main.py`.
+## 🚀 CLI Usage
+The single entry point for all modules is `main.py`.
 
-### Вариант 1: Интерактивный режим
-Запустите скрипт с флагом `--agent` без параметров. Система предложит ввести запрос вручную.
+### Option 1: Interactive Mode
+Run the script with the `--agent` flag without parameters. The system will prompt you for input.
 ```bash
 python main.py --agent
 ```
-*Пример ввода:* `Выживет ли портфель в кризис с 30 просадкой и 50% хеджем?`
+*Example input:* `Will the portfolio survive a crisis with a 30 drawdown and 50% hedge?`
 
-### Вариант 2: Прямая передача запроса (One-shot)
-Удобно для автоматизации и CI/CD тестов. Передайте текст запроса в кавычках сразу после флага.
+### Option 2: One-shot Execution
+Useful for automation and CI/CD pipelines. Pass the query string directly after the flag.
 ```bash
-python main.py --agent "какие активы на крипто рынке"
+python main.py --agent "what assets are on the crypto market"
 ```
 
-## 🧠 Ожидаемое поведение
-1. **Intent Router** перехватывает текст и с помощью регулярных выражений пытается извлечь финансовые сущности (Entities) и определить намерение (Intent).
-2. Если интент распознан (например, `check_risk`), **Response Formatter** генерирует аналитический Markdown-отчет на основе математической модели, **не обращаясь к LLM** (экономия ресурсов).
-3. Если интент не распознан (`unknown`), запрос маршрутизируется в **LLM Client** для обработки естественным интеллектом (Fallback).
+## 🧠 Expected Behavior
+1. **Intent Router** intercepts the text and uses regular expressions to extract financial Entities and determine the Intent.
+2. If the intent is recognized (e.g., `check_risk`), the **Response Formatter** generates an analytical Markdown report based on a mathematical model, **bypassing the LLM** (saving resources/tokens).
+3. If the intent is not recognized (`unknown`), the query is routed to the **LLM Client** for natural language processing (Fallback).

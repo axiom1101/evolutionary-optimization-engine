@@ -19,13 +19,26 @@ def print_banner():
 
 def run_etl():
     print("[*] Запуск ETL пайплайна (Ingestion Layer)...")
-
-    # #[ДОБАВЛЕНО]: Вызов нашего нового парсера
     from ingestion.legacy_parser import process_file_etl
 
-    print("\n[ETL] Старт обработки Legacy-конфигураций...")
-    # Имитируем обработку файла (в DEMO_MODE он сгенерирует mock-файл)
-    process_file_etl(input_filename="market_data_dump.lua", output_filename="market_data_normalized.json")
+    raw_dir = os.path.join(os.path.dirname(__file__), 'data', 'raw')
+    os.makedirs(raw_dir, exist_ok=True)
+
+    # #[ДОБАВЛЕНО]: Динамическое сканирование папки raw/ вместо хардкода
+    files_to_process = [f for f in os.listdir(raw_dir) if f.endswith(('.lua', '.txt'))]
+
+    if not files_to_process:
+        print("[!] Папка data/raw/ пуста.")
+        if DEMO_MODE:
+            print("[DEMO MODE] Генерирую тестовый прогон для mock-данных...")
+            process_file_etl("mock_market_data.lua", "mock_market_data.json")
+        return
+
+    print(f"\n[ETL] Найдено файлов для обработки: {len(files_to_process)}")
+    for filename in files_to_process:
+        # Меняем расширение на .json для выходного файла
+        out_name = os.path.splitext(filename)[0] + ".json"
+        process_file_etl(filename, out_name)
 
     print("\n[ETL] Пайплайн успешно завершен. Данные готовы для In-Memory индексов.")
 

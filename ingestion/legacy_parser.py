@@ -26,30 +26,22 @@ try:
             и возвращает Python-словарь.
             """
             try:
-                # #[ИЗ RAW]: Предобработка (вдохновлено utils/lua_loader.py)
-                # #[ИЗМЕНЕНО]: Сохранена вся твоя логика регулярок "как есть",
-                # так как это ядро очистки грязных данных (Data Cleansing).
-
-                # 1. Убираем "return" (в начале)
                 processed_str = re.sub(r'^\s*return\s*', '', raw_str, flags=re.IGNORECASE)
-                # 2. Обрезаем до первой {
+
                 first_brace = processed_str.find("{")
-                if first_brace > 0:
+                # #[ИЗ RAW]: if first_brace > 0:
+                # #[ИЗМЕНЕНО]: Исправлен баг индексации. Теперь корректно обрабатывает скобку на 0 индексе.
+                if first_brace != -1:
                     processed_str = processed_str[first_brace:]
-                # 3. Убираем комментарии (однострочные)
+
                 processed_str = re.sub(r'--.*$', '', processed_str, flags=re.MULTILINE)
-                # 4. Убираем висячие запятые
                 processed_str = re.sub(r',(\s*[}\]])', r'\1', processed_str)
-                # 5. Фикс "минус без цифр" (упрощённо)
                 processed_str = re.sub(r'(\s*=\s*)-(\s*[,}])', r'\1nil\2', processed_str)
                 processed_str = re.sub(r'-(\s*[,}])', r'0\1', processed_str)
-                # 6. Убираем лишние пробелы
                 processed_str = processed_str.strip()
 
-                # ВАЖНО: используем метод decode у экземпляра
                 parsed_data = _SLPP_PARSER_INSTANCE.decode(processed_str)
 
-                # Иногда slpp возвращает список с одним dict
                 if isinstance(parsed_data, list) and len(parsed_data) == 1 and isinstance(parsed_data[0], dict):
                     parsed_data = parsed_data[0]
 

@@ -1,23 +1,20 @@
-# 📘 Runbook: Запуск ETL-пайплайна (Data Ingestion)
+# 📘 Runbook: ETL Pipeline Execution (Data Ingestion)
 
-Данный модуль демонстрирует процесс извлечения (Extract), очистки (Transform) и загрузки (Load) неструктурированных legacy-данных (Lua/XML) в нормализованное хранилище (Data Lake).
+*Read this in [Russian](01_run_etl_pipeline_RU.md)*
 
-## ⚙️ Предварительная настройка
-1. Убедитесь, что установлена библиотека лексического анализа:
-```bash
-pip install slpp
-```
-2. Поместите сырые файлы (например, дампы конфигураций) в директорию `data/raw/`.
-3. Если включен `DEMO_MODE = True` в `settings.ini`, пайплайн сгенерирует Mock-данные автоматически, даже если папка `raw/` пуста.
+This module demonstrates the Extract, Transform, and Load (ETL) process for unstructured legacy data (Lua/XML) into a normalized Data Lake.
 
-## 🚀 Использование CLI
+## ⚙️ Prerequisites
+1. Ensure the lexical analysis library is installed:
+`pip install -r requirements.txt`
+2. Place raw files (e.g., legacy config dumps) into the `data/raw/` directory.
+3. If `DEMO_MODE = True` in `settings.ini`, the pipeline will automatically generate Mock data even if the `raw/` folder is empty.
 
-Запустите скрипт с флагом `--etl`:
-```bash
-python main.py --etl
-```
+## 🚀 CLI Usage
+Run the script with the `--etl` flag:
+`python main.py --etl`
 
-## 🧠 Ожидаемое поведение
-1. **Extract:** Скрипт `legacy_parser.py` читает сырой файл из `data/raw/`.
-2. **Transform:** С помощью регулярных выражений удаляются комментарии, висячие запятые и исправляются синтаксические ошибки legacy-систем. Затем `slpp` конвертирует строку в Python-словарь.
-3. **Load:** Нормализованные данные сохраняются в формате строгого JSON в директорию `data/normalized/`. Эти данные готовы для загрузки в In-Memory индексы (`core/in_memory_index.py`).
+## 🧠 Expected Behavior
+1. **Extract:** `legacy_parser.py` reads the raw file from `data/raw/`.
+2. **Transform:** Regular expressions strip comments and fix syntax errors. `slpp` converts the string into a Python dictionary.
+3. **Load:** Normalized data is saved as strict JSON in `data/normalized/`, ready for In-Memory indexing.
