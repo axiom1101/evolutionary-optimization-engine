@@ -1,0 +1,9 @@
+# Lexical parsing for legacy configs
+slpp==1.2.2
+
+# LLM Integration
+google-genai
+
+# (Future) RPA and Computer Vision
+# pyautogui
+# opencv-python

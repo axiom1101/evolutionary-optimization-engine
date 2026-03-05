@@ -1,0 +1,22 @@
+# Environments
+.env
+.venv
+env/
+venv/
+
+# PyCharm
+.idea/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Configs & Secrets
+configs/settings.ini
+
+# Data (We don't push raw/normalized data to git, only structure)
+data/raw/*
+!data/raw/.gitkeep
+data/normalized/*
+!data/normalized/.gitkeep
