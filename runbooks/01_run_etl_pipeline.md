@@ -1,7 +1,5 @@
 # 📘 Runbook: ETL Pipeline Execution (Data Ingestion)
 
-*Read this in [Russian](01_run_etl_pipeline_RU.md)*
-
 This module demonstrates the Extract, Transform, and Load (ETL) process for unstructured legacy data (Lua/XML) into a normalized Data Lake.
 
 ## ⚙️ Prerequisites

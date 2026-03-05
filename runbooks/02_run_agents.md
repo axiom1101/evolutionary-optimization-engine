@@ -1,7 +1,5 @@
 # 📘 Runbook: AI Agents Execution (NLP & LLM Orchestration)
 
-*Read this in [Russian](02_run_agents_RU.md)*
-
 This module demonstrates a hybrid pipeline: a deterministic NLP Intent Router combined with an LLM (Ollama/Gemini) fallback mechanism.
 
 ## ⚙️ Prerequisites
