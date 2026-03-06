@@ -3,8 +3,8 @@
 The `core/metrics_db.py` module is the mathematical heart of the Evolutionary Optimization Engine. It handles the complex aggregation of modifiers applied to system components (assets, nodes, microservices).
 
 ## The Problem
-In complex systems (like financial markets), modifiers do not simply add up. They interact in three distinct ways:
-1.  **Flat additions** (e.g., +$1000 to base capital).
+In complex systems (like financial markets, supply chain networks, or cloud infrastructure topologies), modifiers do not simply add up. They interact in three distinct ways:
+1.  **Flat additions** (e.g., +$1000 to base capital, or +50 compute nodes).
 2.  **Additive percentages** (e.g., +10% yield and +5% yield = +15% total).
 3.  **Multiplicative percentages** (e.g., a 1.5x margin leverage applies to the *entire* accumulated sum).
 
