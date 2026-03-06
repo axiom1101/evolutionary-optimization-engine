@@ -93,27 +93,34 @@ def run_evolution():
     from core.evolution_engine import main as evolution_main
     evolution_main()
 
+def run_rpa():
+    print("[*] Запуск модуля RPA & Computer Vision...")
+    from automation.signal_monitor import run_monitor
+    run_monitor()
+
 
 def main():
     print_banner()
 
     parser = argparse.ArgumentParser(description="EOE Command Line Interface")
     parser.add_argument('--etl', action='store_true', help='Запустить сбор и нормализацию данных')
-    # #[ИЗМЕНЕНО]: Теперь --agent может принимать строку
     parser.add_argument('--agent', nargs='?', const=True,
                         help='Запустить AI-Агента. Можно передать текст запроса в кавычках.')
     parser.add_argument('--evolve', action='store_true', help='Запустить генетический алгоритм')
+    # #[ДОБАВЛЕНО]: Флаг для запуска RPA бота
+    parser.add_argument('--rpa', action='store_true', help='Запустить CV-монитор торговых сигналов')
 
     args = parser.parse_args()
 
     if args.etl:
         run_etl()
     elif args.agent is not None:
-        # Если передали текст, args.agent будет строкой. Если просто флаг - True.
         query = args.agent if isinstance(args.agent, str) else None
         run_agent(query)
     elif args.evolve:
         run_evolution()
+    elif args.rpa:
+        run_rpa()
     else:
         parser.print_help()
         sys.exit(1)
