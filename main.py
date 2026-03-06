@@ -89,8 +89,9 @@ def run_agent(custom_query=None):
 
 def run_evolution():
     print("[*] Запуск Генетического Алгоритма (Core Engine)...")
-    # Здесь позже будет вызов core.evolution_engine.main()
-    print("[-] Модуль Эволюции пока в разработке.")
+    # #[ДОБАВЛЕНО]: Вызов нашего эволюционного движка
+    from core.evolution_engine import main as evolution_main
+    evolution_main()
 
 
 def main():
