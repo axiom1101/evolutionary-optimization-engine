@@ -29,8 +29,6 @@ try:
                 processed_str = re.sub(r'^\s*return\s*', '', raw_str, flags=re.IGNORECASE)
 
                 first_brace = processed_str.find("{")
-                # #[ИЗ RAW]: if first_brace > 0:
-                # #[ИЗМЕНЕНО]: Исправлен баг индексации. Теперь корректно обрабатывает скобку на 0 индексе.
                 if first_brace != -1:
                     processed_str = processed_str[first_brace:]
 

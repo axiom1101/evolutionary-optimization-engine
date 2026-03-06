@@ -15,8 +15,11 @@ __pycache__/
 # Configs & Secrets
 configs/settings.ini
 
-# Data (We don't push raw/normalized data to git, only structure)
+# Data (We don't push raw/normalized data to git, only structure and examples)
 data/raw/*
 !data/raw/.gitkeep
+!data/raw/README.md
+!data/raw/market_assets.lua
+
 data/normalized/*
 !data/normalized/.gitkeep
